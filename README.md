@@ -1,1 +1,0 @@
-# hw13_FSWD_Rakamin
