@@ -26,4 +26,17 @@ async function loginUser(data) {
     throw new Error(error.response.data.message || "Something went wrong");
   }
 }
-export { getAllBooks, registerUser, loginUser };
+
+async function addNewBook(data) {
+  try {
+    const response = await instance.post("books", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+export { getAllBooks, registerUser, loginUser, addNewBook };

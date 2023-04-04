@@ -1,8 +1,21 @@
 import { Button, Flex, HStack, Spacer, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { PATH } from "../constants/path.js";
+import { useEffect, useState } from "react";
 
 function Layout({ children }) {
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+
+    if (token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [window.localStorage.getItem("token")]);
+
   return (
     <>
       <Flex
@@ -16,9 +29,26 @@ function Layout({ children }) {
         </Text>
         <Spacer />
         <HStack>
-          <Link to={PATH.login}>
-            <Button>Login</Button>
-          </Link>
+          {isLogin && (
+            <Link to="/books">
+              <Button colorScheme="blackAlpha">Create New Book</Button>
+            </Link>
+          )}
+          {!isLogin ? (
+            <Link to={PATH.login}>
+              <Button>Login</Button>
+            </Link>
+          ) : (
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                window.localStorage.removeItem("token");
+                setIsLogin(false);
+              }}
+            >
+              Logout
+            </Button>
+          )}
         </HStack>
       </Flex>
       {children}
