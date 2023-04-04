@@ -1,4 +1,4 @@
-import { Link, Form } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PATH } from "../constants/path.js";
 import { useState } from "react";
 import {
@@ -21,7 +21,6 @@ function RegisterPage() {
     watch,
     formState: { errors },
   } = useForm();
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
 
@@ -49,6 +48,7 @@ function RegisterPage() {
         duration: 3000,
         isClosable: true,
       });
+
       setIsSubmitting(false);
     }
   };
@@ -66,7 +66,7 @@ function RegisterPage() {
             <Input
               type="name"
               placeholder="Enter your name"
-              {...register("name", { register: true })}
+              {...register("name", { required: true })}
             />
           </FormControl>
 
@@ -75,7 +75,7 @@ function RegisterPage() {
             <Input
               type="email"
               placeholder="Enter your email address"
-              {...register("email", { register: true })}
+              {...register("email", { required: true })}
             />
           </FormControl>
 
@@ -84,7 +84,7 @@ function RegisterPage() {
             <Input
               type="password"
               placeholder="Enter a password"
-              {...register("password", { register: true })}
+              {...register("password", { required: true })}
             />
           </FormControl>
 
@@ -93,26 +93,30 @@ function RegisterPage() {
             <Input
               type="password"
               placeholder="Confirm your password"
-              {...register("passwordConfirmation", { register: true })}
+              {...register("confirmPassword", {
+                required: true,
+                validate: (value) => value === watch("password"),
+              })}
             />
+            {errors.confirmPassword && (
+              <FormErrorMessage>Passwords do not match</FormErrorMessage>
+            )}
           </FormControl>
 
-          <Button mt={8} colorScheme="teal" type="submit">
+          <Button
+            mt={6}
+            colorScheme="teal"
+            type="submit"
+            isLoading={isSubmitting}
+          >
             Register
           </Button>
         </form>
-        <Box>
-          <Button mt={8}>
-            <Link to={PATH.login}>
-              <Text>Login</Text>
-            </Link>
-          </Button>
-          <Button mt={8} ml={4}>
-            <Link to={PATH.home}>
-              <Text>Back To Home</Text>
-            </Link>
-          </Button>
-        </Box>
+        <Button mt="10px">
+          <Link to={PATH.home}>
+            <Text>Back To Home</Text>
+          </Link>
+        </Button>
       </Box>
     </Box>
   );

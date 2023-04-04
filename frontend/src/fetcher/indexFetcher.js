@@ -18,4 +18,12 @@ async function registerUser(data) {
   }
 }
 
-export { getAllBooks, registerUser };
+async function loginUser(data) {
+  try {
+    const response = await instance.post("/login", data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+export { getAllBooks, registerUser, loginUser };
