@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import {
   AddBookPage,
-  AllBookPage,
   DeletePage,
   DetailPage,
   EditBookPage,
@@ -34,10 +33,6 @@ const router = createBrowserRouter([
   {
     path: PATH.home,
     element: <HomePage />,
-  },
-  {
-    path: PATH.allBook,
-    element: <AllBookPage />,
   },
   {
     path: PATH.editBook,

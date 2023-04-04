@@ -1,4 +1,7 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, HStack, Spacer, Text } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { PATH } from "../constants/path.js";
+
 function Layout({ children }) {
   return (
     <>
@@ -11,6 +14,12 @@ function Layout({ children }) {
         <Text as="b" fontSize="xl">
           My Bookstore
         </Text>
+        <Spacer />
+        <HStack>
+          <Link to={PATH.login}>
+            <Button>Login</Button>
+          </Link>
+        </HStack>
       </Flex>
       {children}
     </>
